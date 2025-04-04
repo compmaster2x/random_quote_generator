@@ -18,36 +18,41 @@ function generateRandomQuote() {
   quoteAuthorElement.textContent = author;
   generateBtn.classList.toggle('red-background');
   
-  // После генерации новой цитаты сбрасываем текст на кнопке
-  toggleFavoriteBtn.textContent = 'Add to fav';
+  toggleFavoriteBtn.style.display = 'inline-block';
+
+  // Проверка: в избранном ли текущая цитата — и отобразим нужную иконку
+  const isFavorite = favorites.some(
+    fav => fav.text === randomQuote.text && fav.author === randomQuote.author
+  );
+
+  toggleFavoriteBtn.classList.toggle('fa-solid', isFavorite);
+  toggleFavoriteBtn.classList.toggle('fa-regular', !isFavorite);
 }
 
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex];
-  
-  // Проверяем, есть ли уже цитата в избранных
-  const isFavorite = favorites.some(fav => fav.text === currentQuote.text && fav.author === currentQuote.author);
+
+  const isFavorite = favorites.some(
+    fav => fav.text === currentQuote.text && fav.author === currentQuote.author
+  );
 
   if (isFavorite) {
-    // Убираем из избранных
-    favorites = favorites.filter(fav => fav.text !== currentQuote.text || fav.author !== currentQuote.author);
-    
-    // Меняем текст на кнопке
-    toggleFavoriteBtn.textContent = 'Add to fav';  // Меняем текст на 'Add to fav'
+    favorites = favorites.filter(
+      fav => fav.text !== currentQuote.text || fav.author !== currentQuote.author
+    );
   } else {
-    // Добавляем в избранные
     favorites.push(currentQuote);
-
-    // Меняем текст на кнопке
-    toggleFavoriteBtn.textContent = 'Remove from fav';  // Меняем текст на 'Remove from fav'
   }
 
-  // Обновляем отображение избранных цитат
+  // Меняем иконку на кнопке
+  toggleFavoriteBtn.classList.toggle('fa-solid', !isFavorite);
+  toggleFavoriteBtn.classList.toggle('fa-regular', isFavorite);
+
   updateFavorites();
 }
 
 function updateFavorites() {
-  favoritesContainer.innerHTML = ''; // Очищаем контейнер перед обновлением
+  favoritesContainer.innerHTML = '';
 
   favorites.forEach(fav => {
     const favoriteCard = document.createElement('div');
