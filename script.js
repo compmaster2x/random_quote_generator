@@ -8,7 +8,8 @@ import quotes from "./modules/quotes.js";
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
     quoteElement.innerHTML = `${randomQuote.text}  <br>  ${randomQuote.author}` ;
-    
+    generateBtn.classList.toggle('red-background');
+
 
   }
   
