@@ -9,7 +9,7 @@ import quotes from "./modules/quotes.js";
   let currentQuoteIndex
 
 
-  function generateRandomQuote() { //quote must be replaced for text
+  function generateRandomQuote() { 
     currentQuoteIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[currentQuoteIndex];
     const {text, author}  = randomQuote
