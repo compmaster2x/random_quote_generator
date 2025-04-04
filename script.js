@@ -12,8 +12,8 @@ import quotes from "./modules/quotes.js";
   function generateRandomQuote() { //quote must be replaced for text
     currentQuoteIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[currentQuoteIndex];
-    const {quote, author}  = randomQuote
-    quoteElement.textContent = quote
+    const {text, author}  = randomQuote
+    quoteElement.textContent = text
     quoteAuthorElement.textContent = author
   }
 
