@@ -23,4 +23,15 @@ body {
   button:hover {
     background-color: #0056b3;
   }
-  
+
+  /* Обычное состояние кнопки */
+
+
+/* Кнопка с красным фоном */
+#generate-btn.red-background {
+  background-color: red;
+  color: yellow;
+
+}
+
+  /* red bg in version 1.0.1 is for cheching how DOM will be merged further */
