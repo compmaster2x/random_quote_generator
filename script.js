@@ -9,7 +9,7 @@ import quotes from "./modules/quotes.js";
   let currentQuoteIndex
 
 
-  function generateRandomQuote() {
+  function generateRandomQuote() { //quote must be replaced for text
     currentQuoteIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[currentQuoteIndex];
     const {quote, author}  = randomQuote
@@ -20,6 +20,7 @@ import quotes from "./modules/quotes.js";
   function toggleFavorite(){
     const currentQuote= quotes[currentQuoteIndex]
     currentQuote.isFavorite = !currentQuote.isFavorite
+    toggleFavoriteBtn.textContent = currentQuote.isFavorite ? 'Remove from favorites' : 'Add 2 fav'
   }
   
   generateBtn.addEventListener('click', generateRandomQuote);
