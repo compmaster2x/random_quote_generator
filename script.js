@@ -1,4 +1,9 @@
 import quotes from "./modules/quotes.js";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  toggleFavoriteIcon
+} from "./modules/favoritesHandler.js"
 
 const quoteElement = document.getElementById('quote');
 const generateBtn = document.getElementById('generate-btn');
@@ -11,32 +16,18 @@ let favorites = [];
 
 function generateRandomQuote() {
   currentQuoteIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[currentQuoteIndex];
-  const { text, author } = randomQuote;
+  const currentQuote = quotes[currentQuoteIndex];
 
-  quoteElement.textContent = text;
-  quoteAuthorElement.textContent = author;
+  quoteElement.textContent = currentQuote.text;
+  quoteAuthorElement.textContent = currentQuote.author;
   generateBtn.classList.toggle('red-background');
-  
   toggleFavoriteBtn.style.display = 'inline-block';
 
-  // Проверка: в избранном ли текущая цитата — и отобразим нужную иконку
   const isFavorite = favorites.some(
-    fav => fav.text === randomQuote.text && fav.author === randomQuote.author
+    fav => fav.text === currentQuote.text && fav.author === currentQuote.author
   );
 
-  toggleFavoriteBtn.classList.toggle('fa-solid', isFavorite);
-  toggleFavoriteBtn.classList.toggle('fa-regular', !isFavorite);
-}
-
-function toggleFavoriteIcon(isFavorite){
-  toggleFavoriteBtn.classList.toggle('fa-solid', !isFavorite);
-  toggleFavoriteBtn.classList.toggle('fa-regular', isFavorite);
-}
-
-
-function hideFavCard(currentQuote){
-  favorites.push(currentQuote);
+  toggleFavoriteIcon(isFavorite, toggleFavoriteBtn);
 }
 
 function toggleFavorite() {
@@ -47,18 +38,15 @@ function toggleFavorite() {
   );
 
   if (isFavorite) {
-    favorites = favorites.filter(
-      fav => fav.text !== currentQuote.text || fav.author !== currentQuote.author
-    );
+    favorites = removeFromFavorites(currentQuote, favorites);
   } else {
-    hideFavCard(currentQuote);
+    addToFavorites(currentQuote, favorites);
   }
 
-  // Меняем иконку на кнопке
-  toggleFavoriteIcon(isFavorite)
-
+  toggleFavoriteIcon(!isFavorite, toggleFavoriteBtn);
   updateFavorites();
 }
+
 
 function updateFavorites() {
   favoritesContainer.innerHTML = '';
