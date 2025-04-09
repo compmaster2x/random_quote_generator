@@ -4,6 +4,7 @@ import {
   removeFromFavorites,
   toggleFavoriteIcon
 } from "./modules/favoritesHandler.js"
+import {generateRandInt} from './modules/utils.js'
 
 const quoteElement = document.getElementById('quote');
 const generateBtn = document.getElementById('generate-btn');
@@ -15,9 +16,8 @@ let currentQuoteIndex = -1;
 let favorites = [];
 
 function generateRandomQuote() {
-  currentQuoteIndex = Math.floor(Math.random() * quotes.length);
+  currentQuoteIndex = generateRandInt(quotes.length);
   const currentQuote = quotes[currentQuoteIndex];
-
   quoteElement.textContent = currentQuote.text;
   quoteAuthorElement.textContent = currentQuote.author;
   generateBtn.classList.toggle('red-background');
@@ -29,6 +29,7 @@ function generateRandomQuote() {
 
   toggleFavoriteIcon(isFavorite, toggleFavoriteBtn);
 }
+
 
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex];
