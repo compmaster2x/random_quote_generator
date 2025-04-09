@@ -29,6 +29,16 @@ function generateRandomQuote() {
   toggleFavoriteBtn.classList.toggle('fa-regular', !isFavorite);
 }
 
+function toggleFavoriteIcon(isFavorite){
+  toggleFavoriteBtn.classList.toggle('fa-solid', !isFavorite);
+  toggleFavoriteBtn.classList.toggle('fa-regular', isFavorite);
+}
+
+
+function hideFavCard(currentQuote){
+  favorites.push(currentQuote);
+}
+
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex];
 
@@ -41,12 +51,11 @@ function toggleFavorite() {
       fav => fav.text !== currentQuote.text || fav.author !== currentQuote.author
     );
   } else {
-    favorites.push(currentQuote);
+    hideFavCard(currentQuote);
   }
 
   // Меняем иконку на кнопке
-  toggleFavoriteBtn.classList.toggle('fa-solid', !isFavorite);
-  toggleFavoriteBtn.classList.toggle('fa-regular', isFavorite);
+  toggleFavoriteIcon(isFavorite)
 
   updateFavorites();
 }
