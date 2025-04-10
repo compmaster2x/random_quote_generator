@@ -1,6 +1,8 @@
 import quotes from "./modules/quotes.js";
 import {
   addToFavorites,
+  showToggleFavB,
+  hideToggleFavB,
   removeFromFavorites,
   toggleFavoriteIcon
 } from "./modules/favoritesHandler.js"
@@ -14,14 +16,17 @@ const favoritesContainer = document.getElementById('favorites-container');
 
 let currentQuoteIndex = -1;
 let favorites = [];
+hideToggleFavB(toggleFavoriteBtn);
 
 function generateRandomQuote() {
   currentQuoteIndex = generateRandInt(quotes.length);
   const currentQuote = quotes[currentQuoteIndex];
   quoteElement.textContent = currentQuote.text;
   quoteAuthorElement.textContent = currentQuote.author;
+
   generateBtn.classList.toggle('red-background');
-  toggleFavoriteBtn.style.display = 'inline-block';
+
+  showToggleFavB(toggleFavoriteBtn);
 
   const isFavorite = favorites.some(
     fav => fav.text === currentQuote.text && fav.author === currentQuote.author
@@ -29,7 +34,6 @@ function generateRandomQuote() {
 
   toggleFavoriteIcon(isFavorite, toggleFavoriteBtn);
 }
-
 
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex];
@@ -41,13 +45,12 @@ function toggleFavorite() {
   if (isFavorite) {
     favorites = removeFromFavorites(currentQuote, favorites);
   } else {
-    addToFavorites(currentQuote, favorites);
+    favorites = addToFavorites(currentQuote, favorites);
   }
 
   toggleFavoriteIcon(!isFavorite, toggleFavoriteBtn);
   updateFavorites();
 }
-
 
 function updateFavorites() {
   favoritesContainer.innerHTML = '';
